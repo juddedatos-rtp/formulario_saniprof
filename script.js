@@ -1,5 +1,4 @@
 const scriptURL = "https://script.google.com/macros/s/AKfycbxSiRIHKbxmWAHG-gYQJ2Vb_ZxaNV_iy0QCVkgYweo1oUMpx_u-04uMosRv4mvLZkwFWQ/exec";
-
 document.getElementById("formulario").addEventListener("submit", async function(e){
   e.preventDefault();
   let form = e.target;
@@ -25,4 +24,5 @@ document.getElementById("formulario").addEventListener("submit", async function(
     console.error("Error:", error);
     alert("Error al enviar el formulario");
   }
+
 });
