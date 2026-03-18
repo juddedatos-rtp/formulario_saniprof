@@ -24,9 +24,10 @@ document.getElementById("formulario").addEventListener("submit", async function(
       reader.readAsDataURL(file);
     } else {
       await fetch(scriptURL, {
-        method:"POST",
-        body:formData
-      });
+        method: "POST",
+        body: formData,
+        mode: "no-cors"
+        });
 
       alert("Formulario enviado correctamente");
       form.reset();
