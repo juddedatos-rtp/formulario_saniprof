@@ -15,15 +15,15 @@ document.getElementById("formulario").addEventListener("submit", function(e){
   if(file){
     let reader = new FileReader();
     reader.onload = function(){
-      enviar(form, insumos, reader.result);
+      enviarDatos(form, insumos, reader.result);
     };
     reader.readAsDataURL(file);
   } else {
-    enviar(form, insumos, "");
+    enviarDatos(form, insumos, "");
   }
 });
 
-function enviar(form, insumos, foto){
+function enviarDatos(form, insumos, foto){
 
   const datos = new URLSearchParams();
 
