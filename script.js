@@ -10,38 +10,21 @@ document.getElementById("formulario").addEventListener("submit", function(e){
     insumos.push(el.value);
   });
 
-  let file = document.getElementById("foto").files[0];
+  // ⚠️ SIN IMAGEN (para que funcione perfecto primero)
+  let url = scriptURL + "?" +
+    "cierre=" + encodeURIComponent(form.cierre.value) +
+    "&horario=" + encodeURIComponent(form.horario.value) +
+    "&trabajador=" + encodeURIComponent(form.trabajador.value) +
+    "&insumos=" + encodeURIComponent(insumos.join(", ")) +
+    "&observaciones=" + encodeURIComponent(form.observaciones.value);
 
-  if(file){
-    let reader = new FileReader();
-    reader.onload = function(){
-      enviarDatos(form, insumos, reader.result);
-    };
-    reader.readAsDataURL(file);
-  } else {
-    enviarDatos(form, insumos, "");
-  }
+  fetch(url)
+    .then(() => {
+      alert("Formulario enviado correctamente");
+      form.reset();
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Error al enviar");
+    });
 });
-
-function enviarDatos(form, insumos, foto){
-
-  const datos = new URLSearchParams();
-
-  datos.append("cierre", form.cierre.value);
-  datos.append("horario", form.horario.value);
-  datos.append("trabajador", form.trabajador.value);
-  datos.append("insumos", insumos.join(", "));
-  datos.append("observaciones", form.observaciones.value);
-  datos.append("foto", foto);
-
-  fetch(scriptURL, {
-    method: "POST",
-    body: datos,
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    }
-  });
-
-  alert("Formulario enviado correctamente");
-  form.reset();
-}
