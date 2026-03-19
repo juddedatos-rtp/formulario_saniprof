@@ -5,47 +5,133 @@
 <title>Formulario Cierre de Circuito</title>
 
 <style>
+*{
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body{
-  font-family: Arial;
-  background:#77B55C;
-  padding:30px;
+  margin:0;
+  background: linear-gradient(135deg, #4facfe, #43e97b);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.container{
+  width:100%;
+  max-width:520px;
+}
+
+h2{
+  text-align:center;
+  color:#fff;
+  margin-bottom:20px;
 }
 
 form{
-  background:#fff;
-  padding:20px;
-  max-width:500px;
-  margin:auto;
-  border-radius:10px;
+  background:#ffffff;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.section-title{
+  margin-top:20px;
+  margin-bottom:10px;
+  font-weight:bold;
+  color:#2c3e50;
+  border-bottom:2px solid #eee;
+  padding-bottom:5px;
 }
 
 label{
   display:block;
+  margin-top:12px;
+  font-size:14px;
+  color:#555;
+}
+
+select, input, textarea{
+  width:100%;
+  padding:10px;
+  margin-top:5px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  transition: all 0.3s ease;
+}
+
+select:focus, input:focus, textarea:focus{
+  border-color:#4facfe;
+  outline:none;
+  box-shadow:0 0 5px rgba(79,172,254,0.5);
+}
+
+textarea{
+  resize:none;
+  height:80px;
+}
+
+/* 🔥 INSUMOS MEJORADOS */
+.checkbox-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
   margin-top:10px;
 }
 
-select,input,textarea{
-  width:100%;
-  padding:8px;
-  margin-top:5px;
+.checkbox-grid label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:#f8f9fa;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #eee;
+  transition:0.2s;
+  cursor:pointer;
+}
+
+.checkbox-grid label:hover{
+  background:#eaf4ff;
+  border-color:#4facfe;
 }
 
 button{
-  margin-top:15px;
-  padding:10px;
-  background:#2c7be5;
+  width:100%;
+  margin-top:20px;
+  padding:12px;
+  background: linear-gradient(135deg, #2c7be5, #00c6ff);
   color:white;
   border:none;
+  border-radius:10px;
+  font-size:16px;
   cursor:pointer;
+  transition: all 0.3s ease;
 }
+
+button:hover{
+  transform: translateY(-2px);
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+.file-input{
+  margin-top:10px;
+}
+
 </style>
 
 </head>
 <body>
 
-<h2>Formulario Cierre de Circuito</h2>
+<div class="container">
+
+<h2>🚍 Cierre de Circuito</h2>
 
 <form id="formulario">
+
+<div class="section-title">Datos Generales</div>
 
 <label>Cierre de Circuito</label>
 <select name="entry.2037866813" required>
@@ -64,22 +150,29 @@ button{
 </select>
 
 <label>Trabajador</label>
-<input type="text" name="entry.1857890296" required>
+<input type="text" name="entry.1857890296" placeholder="Nombre completo" required>
 
-<h3>Insumos</h3>
-<label><input type="checkbox" name="entry.1245624590" value="Papel de baño"> Papel de baño</label>
-<label><input type="checkbox" name="entry.1245624590" value="Gel Antibacterial"> Gel antibacterial</label>
-<label><input type="checkbox" name="entry.1245624590" value="Jabon"> Jabón</label>
+<div class="section-title">Insumos</div>
 
-<h3>Observaciones</h3>
-<textarea name="entry.1928307145"></textarea>
+<div class="checkbox-grid">
+  <label><input type="checkbox" name="entry.1245624590" value="Papel de baño"> Papel de baño</label>
+  <label><input type="checkbox" name="entry.1245624590" value="Gel Antibacterial"> Gel antibacterial</label>
+  <label><input type="checkbox" name="entry.1245624590" value="Jabón"> Jabón</label>
+</div>
 
-<h3>Foto</h3>
-<input type="file" id="foto" accept="image/*">
+<div class="section-title">Observaciones</div>
 
-<button type="submit">Enviar</button>
+<textarea name="entry.1928307145" placeholder="Escribe cualquier observación..."></textarea>
+
+<div class="section-title">Evidencia Fotográfica</div>
+
+<input type="file" id="foto" class="file-input" accept="image/*">
+
+<button type="submit">Enviar Formulario</button>
 
 </form>
+
+</div>
 
 <script>
 document.getElementById("formulario").addEventListener("submit", async function(e){
@@ -90,10 +183,10 @@ document.getElementById("formulario").addEventListener("submit", async function(
 
   let file = document.getElementById("foto").files[0];
 
-  // Convertir imagen a base64
   if(file){
     let base64 = await convertirBase64(file);
-    formData.append("entry.1928307145", form.observaciones.value + " | FOTO: " + base64);
+    let obs = form.querySelector("textarea").value;
+    formData.set("entry.1928307145", obs + " | FOTO: " + base64);
   }
 
   fetch("https://docs.google.com/forms/d/e/1FAIpQLSeXetqFhJncAIbs4fgoo1uZqz88nVw-VsCSN0fah9bBCwIQOw/formResponse", {
@@ -102,11 +195,10 @@ document.getElementById("formulario").addEventListener("submit", async function(
     mode: "no-cors"
   });
 
-  alert("Formulario enviado correctamente");
+  alert("✅ Formulario enviado correctamente");
   form.reset();
 });
 
-// función convertir imagen
 function convertirBase64(file){
   return new Promise((resolve, reject)=>{
     let reader = new FileReader();
