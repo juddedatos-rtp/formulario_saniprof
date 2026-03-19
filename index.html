@@ -59,13 +59,6 @@ select, input, textarea{
   margin-top:5px;
   border:1px solid #ccc;
   border-radius:8px;
-  transition: all 0.3s ease;
-}
-
-select:focus, input:focus, textarea:focus{
-  border-color:#4facfe;
-  outline:none;
-  box-shadow:0 0 5px rgba(79,172,254,0.5);
 }
 
 textarea{
@@ -73,7 +66,7 @@ textarea{
   height:80px;
 }
 
-/* 🔥 INSUMOS MEJORADOS */
+/* INSUMOS EN COLUMNAS */
 .checkbox-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -89,13 +82,7 @@ textarea{
   padding:10px;
   border-radius:8px;
   border:1px solid #eee;
-  transition:0.2s;
   cursor:pointer;
-}
-
-.checkbox-grid label:hover{
-  background:#eaf4ff;
-  border-color:#4facfe;
 }
 
 button{
@@ -108,16 +95,6 @@ button{
   border-radius:10px;
   font-size:16px;
   cursor:pointer;
-  transition: all 0.3s ease;
-}
-
-button:hover{
-  transform: translateY(-2px);
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
-}
-
-.file-input{
-  margin-top:10px;
 }
 
 </style>
@@ -129,7 +106,11 @@ button:hover{
 
 <h2>🚍 Cierre de Circuito</h2>
 
-<form id="formulario">
+<form 
+action="https://docs.google.com/forms/d/e/1FAIpQLSeXetqFhJncAIbs4fgoo1uZqz88nVw-VsCSN0fah9bBCwIQOw/formResponse"
+method="POST"
+target="hidden_iframe"
+onsubmit="enviado=true;">
 
 <div class="section-title">Datos Generales</div>
 
@@ -164,49 +145,26 @@ button:hover{
 
 <textarea name="entry.1928307145" placeholder="Escribe cualquier observación..."></textarea>
 
-<div class="section-title">Evidencia Fotográfica</div>
-
-<input type="file" id="foto" class="file-input" accept="image/*">
-
 <button type="submit">Enviar Formulario</button>
 
 </form>
 
+<!-- iframe oculto -->
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+
 </div>
 
 <script>
-document.getElementById("formulario").addEventListener("submit", async function(e){
-  e.preventDefault();
+let enviado = false;
 
-  let form = e.target;
-  let formData = new FormData(form);
-
-  let file = document.getElementById("foto").files[0];
-
-  if(file){
-    let base64 = await convertirBase64(file);
-    let obs = form.querySelector("textarea").value;
-    formData.set("entry.1928307145", obs + " | FOTO: " + base64);
-  }
-
-  fetch("https://docs.google.com/forms/d/e/1FAIpQLSeXetqFhJncAIbs4fgoo1uZqz88nVw-VsCSN0fah9bBCwIQOw/formResponse", {
-    method: "POST",
-    body: formData,
-    mode: "no-cors"
-  });
-
-  alert("✅ Formulario enviado correctamente");
-  form.reset();
+document.querySelector("form").addEventListener("submit", function(){
+  setTimeout(()=>{
+    if(enviado){
+      alert("✅ Formulario enviado correctamente");
+      document.querySelector("form").reset();
+    }
+  },1000);
 });
-
-function convertirBase64(file){
-  return new Promise((resolve, reject)=>{
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = ()=> resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-}
 </script>
 
 </body>
