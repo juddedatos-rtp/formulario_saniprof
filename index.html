@@ -3,25 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <title>Formulario Cierre de Circuito</title>
+
+<style>
+body{
+  font-family: Arial;
+  background:#77B55C;
+  padding:30px;
+}
+
+form{
+  background:#fff;
+  padding:20px;
+  max-width:500px;
+  margin:auto;
+  border-radius:10px;
+}
+
+label{
+  display:block;
+  margin-top:10px;
+}
+
+select,input,textarea{
+  width:100%;
+  padding:8px;
+  margin-top:5px;
+}
+
+button{
+  margin-top:15px;
+  padding:10px;
+  background:#2c7be5;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+</style>
+
 </head>
 <body>
 
 <h2>Formulario Cierre de Circuito</h2>
 
-<form action="https://docs.google.com/forms/d/e/1FAIpQLSeXetqFhJncAIbs4fgoo1uZqz88nVw-VsCSN0fah9bBCwIQOw/formResponse" method="POST" target="hidden_iframe">
+<form id="formulario">
 
-<label>Cierre</label>
+<label>Cierre de Circuito</label>
 <select name="entry.2037866813" required>
-  <option>Completado</option>
-  <option>Incompleto</option>
-  <option>En proceso</option>
+  <option value="">Seleccionar</option>
+  <option value="Hidalgo">Hidalgo</option>
+  <option value="Reclusorio Norte">Reclusorio Norte</option>
+  <option value="El Charco">El Charco</option>
 </select>
 
 <label>Horario</label>
 <select name="entry.1566385644" required>
-  <option>Matutino</option>
-  <option>Vespertino</option>
-  <option>Nocturno</option>
+  <option value="">Seleccionar</option>
+  <option value="Matutino">Matutino</option>
+  <option value="Vespertino">Vespertino</option>
+  <option value="Nocturno">Nocturno</option>
 </select>
 
 <label>Trabajador</label>
@@ -35,11 +74,48 @@
 <h3>Observaciones</h3>
 <textarea name="entry.1928307145"></textarea>
 
+<h3>Foto</h3>
+<input type="file" id="foto" accept="image/*">
+
 <button type="submit">Enviar</button>
 
 </form>
 
-<iframe name="hidden_iframe" style="display:none;"></iframe>
+<script>
+document.getElementById("formulario").addEventListener("submit", async function(e){
+  e.preventDefault();
+
+  let form = e.target;
+  let formData = new FormData(form);
+
+  let file = document.getElementById("foto").files[0];
+
+  // Convertir imagen a base64
+  if(file){
+    let base64 = await convertirBase64(file);
+    formData.append("entry.1928307145", form.observaciones.value + " | FOTO: " + base64);
+  }
+
+  fetch("https://docs.google.com/forms/d/e/1FAIpQLSeXetqFhJncAIbs4fgoo1uZqz88nVw-VsCSN0fah9bBCwIQOw/formResponse", {
+    method: "POST",
+    body: formData,
+    mode: "no-cors"
+  });
+
+  alert("Formulario enviado correctamente");
+  form.reset();
+});
+
+// función convertir imagen
+function convertirBase64(file){
+  return new Promise((resolve, reject)=>{
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = ()=> resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+</script>
 
 </body>
 </html>
