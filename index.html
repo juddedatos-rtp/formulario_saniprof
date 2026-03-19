@@ -5,149 +5,95 @@
 <title>Formulario Cierre de Circuito</title>
 
 <style>
-*{
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
 body{
   margin:0;
   background: linear-gradient(135deg, #4facfe, #43e97b);
-  min-height:100vh;
+  font-family: Arial;
   display:flex;
-  align-items:center;
   justify-content:center;
-}
-
-.container{
-  width:100%;
-  max-width:520px;
-}
-
-h2{
-  text-align:center;
-  color:#fff;
+  align-items:center;
+  min-height:100vh;
 }
 
 form{
   background:#fff;
   padding:25px;
   border-radius:15px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
-}
-
-.section-title{
-  margin-top:20px;
-  font-weight:bold;
-  border-bottom:2px solid #eee;
-  padding-bottom:5px;
-}
-
-label{
-  display:block;
-  margin-top:12px;
-}
-
-select,input,textarea{
   width:100%;
+  max-width:500px;
+}
+
+input, select, textarea{
+  width:100%;
+  margin-top:10px;
   padding:10px;
-  margin-top:5px;
   border-radius:8px;
   border:1px solid #ccc;
 }
 
-.checkbox-grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:10px;
-  margin-top:10px;
-}
-
-.checkbox-grid label{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:#f8f9fa;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid #eee;
-}
-
 button{
-  width:100%;
   margin-top:20px;
   padding:12px;
+  width:100%;
   background:#2c7be5;
-  color:white;
+  color:#fff;
   border:none;
   border-radius:10px;
-  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<form id="formulario">
 
-<h2>🚍 Cierre de Circuito</h2>
+<h3>🚍 Cierre de Circuito</h3>
 
-<form id="miFormulario">
-
-<div class="section-title">Datos Generales</div>
-
-<label>Cierre de Circuito</label>
-<select name="entry.2037866813" required>
-  <option value="">Seleccionar</option>
-  <option value="Hidalgo">Hidalgo</option>
-  <option value="Reclusorio Norte">Reclusorio Norte</option>
-  <option value="El Charco">El Charco</option>
+<label>Cierre</label>
+<select name="entry.2037866813">
+  <option>Hidalgo</option>
+  <option>Reclusorio Norte</option>
+  <option>El Charco</option>
 </select>
 
 <label>Horario</label>
-<select name="entry.1566385644" required>
-  <option value="">Seleccionar</option>
-  <option value="Matutino">Matutino</option>
-  <option value="Vespertino">Vespertino</option>
-  <option value="Nocturno">Nocturno</option>
+<select name="entry.1566385644">
+  <option>Matutino</option>
+  <option>Vespertino</option>
+  <option>Nocturno</option>
 </select>
 
 <label>Trabajador</label>
-<input type="text" name="entry.1857890296" required>
+<input name="entry.1857890296">
 
-<div class="section-title">Insumos</div>
+<label>Insumos</label>
+<label><input type="checkbox" name="entry.1245624590" value="Papel de baño"> Papel de baño</label>
+<label><input type="checkbox" name="entry.1245624590" value="Gel Antibacterial"> Gel Antibacterial</label>
+<label><input type="checkbox" name="entry.1245624590" value="Jabon"> Jabon</label>
 
-<div class="checkbox-grid">
-  <label><input type="checkbox" name="entry.1245624590" value="Papel de baño"> Papel de baño</label>
-  <label><input type="checkbox" name="entry.1245624590" value="Gel Antibacterial"> Gel Antibacterial</label>
-  <label><input type="checkbox" name="entry.1245624590" value="Jabon"> Jabon</label>
-</div>
-
-<div class="section-title">Observaciones</div>
-
+<label>Observaciones</label>
 <textarea name="entry.1928307145"></textarea>
 
 <button type="submit">Enviar</button>
 
 </form>
 
-</div>
-
 <script>
-document.getElementById("miFormulario").addEventListener("submit", function(e){
+document.getElementById("formulario").addEventListener("submit", function(e){
   e.preventDefault();
 
-  const form = this;
-  const data = new FormData(form);
+  let data = new FormData(this);
 
   fetch("https://docs.google.com/forms/d/e/1FAIpQLSeXetqFhJncAIbs4fgoo1uZqz88nVw-VsCSN0fah9bBCwIQOw/formResponse", {
     method: "POST",
     mode: "no-cors",
     body: data
-  }).then(() => {
-    alert("✅ Formulario enviado correctamente");
-    form.reset();
-  }).catch(() => {
+  })
+  .then(() => {
+    alert("✅ Datos guardados en Google Sheets");
+    this.reset();
+  })
+  .catch(() => {
     alert("❌ Error al enviar");
   });
 });
