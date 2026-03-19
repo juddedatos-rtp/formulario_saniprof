@@ -27,11 +27,10 @@ body{
 h2{
   text-align:center;
   color:#fff;
-  margin-bottom:20px;
 }
 
 form{
-  background:#ffffff;
+  background:#fff;
   padding:25px;
   border-radius:15px;
   box-shadow:0 10px 25px rgba(0,0,0,0.2);
@@ -39,9 +38,7 @@ form{
 
 .section-title{
   margin-top:20px;
-  margin-bottom:10px;
   font-weight:bold;
-  color:#2c3e50;
   border-bottom:2px solid #eee;
   padding-bottom:5px;
 }
@@ -49,24 +46,16 @@ form{
 label{
   display:block;
   margin-top:12px;
-  font-size:14px;
-  color:#555;
 }
 
-select, input, textarea{
+select,input,textarea{
   width:100%;
   padding:10px;
   margin-top:5px;
-  border:1px solid #ccc;
   border-radius:8px;
+  border:1px solid #ccc;
 }
 
-textarea{
-  resize:none;
-  height:80px;
-}
-
-/* INSUMOS EN COLUMNAS */
 .checkbox-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -82,24 +71,21 @@ textarea{
   padding:10px;
   border-radius:8px;
   border:1px solid #eee;
-  cursor:pointer;
 }
 
 button{
   width:100%;
   margin-top:20px;
   padding:12px;
-  background: linear-gradient(135deg, #2c7be5, #00c6ff);
+  background:#2c7be5;
   color:white;
   border:none;
   border-radius:10px;
-  font-size:16px;
   cursor:pointer;
 }
-
 </style>
-
 </head>
+
 <body>
 
 <div class="container">
@@ -117,39 +103,39 @@ onsubmit="enviado=true;">
 <label>Cierre de Circuito</label>
 <select name="entry.2037866813" required>
   <option value="">Seleccionar</option>
-  <option value="Hidalgo">Hidalgo</option>
-  <option value="Reclusorio Norte">Reclusorio Norte</option>
-  <option value="El Charco">El Charco</option>
+  <option>Hidalgo</option>
+  <option>Reclusorio Norte</option>
+  <option>El Charco</option>
 </select>
 
 <label>Horario</label>
 <select name="entry.1566385644" required>
   <option value="">Seleccionar</option>
-  <option value="Matutino">Matutino</option>
-  <option value="Vespertino">Vespertino</option>
-  <option value="Nocturno">Nocturno</option>
+  <option>Matutino</option>
+  <option>Vespertino</option>
+  <option>Nocturno</option>
 </select>
 
 <label>Trabajador</label>
-<input type="text" name="entry.1857890296" placeholder="Nombre completo" required>
+<input type="text" name="entry.1857890296" required>
 
 <div class="section-title">Insumos</div>
 
 <div class="checkbox-grid">
+  <!-- 🔥 IMPORTANTE: cada checkbox debe tener value EXACTO -->
   <label><input type="checkbox" name="entry.1245624590" value="Papel de baño"> Papel de baño</label>
-  <label><input type="checkbox" name="entry.1245624590" value="Gel Antibacterial"> Gel antibacterial</label>
+  <label><input type="checkbox" name="entry.1245624590" value="Gel antibacterial"> Gel antibacterial</label>
   <label><input type="checkbox" name="entry.1245624590" value="Jabón"> Jabón</label>
 </div>
 
 <div class="section-title">Observaciones</div>
 
-<textarea name="entry.1928307145" placeholder="Escribe cualquier observación..."></textarea>
+<textarea name="entry.1928307145"></textarea>
 
-<button type="submit">Enviar Formulario</button>
+<button type="submit">Enviar</button>
 
 </form>
 
-<!-- iframe oculto -->
 <iframe name="hidden_iframe" style="display:none;"></iframe>
 
 </div>
