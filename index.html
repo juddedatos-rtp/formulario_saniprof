@@ -64,15 +64,6 @@ textarea{
   border-radius:10px;
   border:1px solid #ddd;
   font-size:14px;
-  transition:0.2s;
-}
-
-select:focus,
-input:focus,
-textarea:focus{
-  border-color:#2c7be5;
-  outline:none;
-  box-shadow:0 0 0 2px rgba(44,123,229,0.2);
 }
 
 .checkbox-grid{
@@ -90,13 +81,6 @@ textarea:focus{
   padding:10px;
   border-radius:10px;
   border:1px solid #eee;
-  font-size:14px;
-  cursor:pointer;
-  transition:0.2s;
-}
-
-.checkbox-grid label:hover{
-  background:#eef4ff;
 }
 
 button{
@@ -110,28 +94,6 @@ button{
   font-size:15px;
   font-weight:600;
   cursor:pointer;
-  transition:0.3s;
-}
-
-button:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 20px rgba(0,0,0,0.2);
-}
-
-@media (max-width:480px){
-
-  form{
-    padding:20px 15px;
-  }
-
-  .checkbox-grid{
-    grid-template-columns: 1fr;
-  }
-
-  h2{
-    font-size:20px;
-  }
-
 }
 </style>
 </head>
@@ -147,7 +109,7 @@ button:hover{
 <div class="section-title">Datos Generales</div>
 
 <label>Cierre de Circuito</label>
-<select name="entry.2037866813" required>
+<select name="entry.1747926528" required>
   <option value="">Seleccionar</option>
   <option value="Hidalgo">Hidalgo</option>
   <option value="Reclusorio Norte">Reclusorio Norte</option>
@@ -155,7 +117,7 @@ button:hover{
 </select>
 
 <label>Horario</label>
-<select name="entry.1566385644" required>
+<select name="entry.1846409222" required>
   <option value="">Seleccionar</option>
   <option value="Matutino">Matutino</option>
   <option value="Vespertino">Vespertino</option>
@@ -163,19 +125,20 @@ button:hover{
 </select>
 
 <label>Trabajador</label>
-<input type="text" name="entry.1857890296" required>
+<input type="text" name="entry.2080763590" required>
 
 <div class="section-title">Insumos Entregados</div>
 
 <div class="checkbox-grid">
-  <label><input type="checkbox" name="entry.1245624590" value="Papel de baño"> Papel de baño</label>
-  <!-- <label><input type="checkbox" name="entry.1245624590" value="Gel Antibacterial"> Gel Antibacterial</label>
-  <label><input type="checkbox" name="entry.1245624590" value="Jabon"> Jabon</label> -->
+  <label>
+    <input type="checkbox" name="entry.1968817159" value="Papel de baño">
+    Papel de baño
+  </label>
 </div>
 
-<div class="section-title">Observaciones/Comentarios</div>
+<div class="section-title">Observaciones</div>
 
-<textarea name="entry.1928307145"></textarea>
+<textarea name="entry.960830566"></textarea>
 
 <button type="submit">Enviar</button>
 
@@ -189,17 +152,17 @@ document.getElementById("formulario").addEventListener("submit", function(e){
 
   let data = new FormData(this);
 
-  fetch("https://docs.google.com/forms/d/e/1FAIpQLSeXetqFhJncAIbs4fgoo1uZqz88nVw-VsCSN0fah9bBCwIQOw/formResponse", {
+  fetch("https://docs.google.com/forms/d/e/1FAIpQLSdd7Sexi4TNefbAfxfHag5g7SJnQn0FX0x9RPrEUK_1Cc5Z3w/formResponse", {
     method: "POST",
     mode: "no-cors",
     body: data
   })
   .then(() => {
-    alert("✅ Datos guardados correctamente");
+    alert("✅ Registro enviado correctamente. Verifica en Google Sheets.");
     this.reset();
   })
   .catch(() => {
-    alert("❌ Error al enviar");
+    alert("❌ Error al enviar. Intenta nuevamente.");
   });
 });
 </script>
